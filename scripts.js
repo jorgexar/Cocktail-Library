@@ -301,7 +301,7 @@ const cocktails = [
   }
 ];
 // This line was edited on laptop. 
-let uniqueSpirits = [];
+let uniqueSpirits = getSpirits(cocktails);
 let uniqueIngredients = [];
 let strengthLevels = [];
 let uniqueFlavors = [];
@@ -311,10 +311,12 @@ const spiritButtons = document.getElementById("spiritsList");
 const mainContent = document.getElementById("main");
 
 function getSpirits(cocktailList) {
+  let filtered = []
   for (let i = 0; i < cocktailList.length; i++) {
-    uniqueSpirits.push(cocktailList[i].baseSpirit);
+    filtered.push(cocktailList[i].baseSpirit);
   }
-  uniqueSpirits = Array.from(new Set(uniqueSpirits));
+  filtered = Array.from(new Set(filtered));
+  return filtered;
 }
 function getStrength(cocktailList) {
   for (let i = 0; i < cocktailList.length; i++) {
@@ -397,7 +399,7 @@ function filterByIngredients(ing) {
 }
 
 
-getSpirits(cocktails);
+// getSpirits(cocktails);
 getIng(cocktails);
 getFlavors(cocktails);
 getTags(cocktails);
