@@ -302,10 +302,10 @@ const cocktails = [
 ];
 // This line was edited on laptop. 
 const uniqueSpirits = getUniqueValue(cocktails,"baseSpirit");
-let uniqueIngredients = getUniqueValue(cocktails,"ingredients");
-let strengthLevels = getUniqueValue(cocktails,"strength");
-let uniqueFlavors = getUniqueValue(cocktails,"flavorProfile");
-let uniqueTags = getUniqueValue(cocktails,"tags");
+const uniqueIngredients = getUniqueValue(cocktails,"ingredients");
+const strengthLevels = getUniqueValue(cocktails,"strength");
+const uniqueFlavors = getUniqueValue(cocktails,"flavorProfile");
+const uniqueTags = getUniqueValue(cocktails,"tags");
 
 const spiritButtons = document.getElementById("spiritsList");
 const mainContent = document.getElementById("main");
