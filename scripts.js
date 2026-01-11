@@ -312,17 +312,13 @@ const mainContent = document.getElementById("main");
 
 
 function getUniqueValues(cocktailList, attribute=null){   
-  let uniqueValues = [];
-  for (let i = 0; i < cocktailList.length; i++) {
-    if(Array.isArray(cocktailList[i][attribute])){
-      for (let j = 0; j < cocktailList[i][attribute].length; j++) {
-        uniqueValues.push(cocktailList[i][attribute][j]);
-      }
+  let unique =[] ;
+    if(Array.isArray(cocktailList[0][attribute])){
+      unique = cocktailList.flatMap(cocktail => cocktail[attribute]);
     } else {
-      uniqueValues.push(cocktailList[i][attribute]);
-    }
+      unique = cocktailList.map(cocktail => cocktail[attribute]);
   }
-  return Array.from(new Set(uniqueValues)).sort();
+  return Array.from(new Set(unique)).sort();
 }
 
 
