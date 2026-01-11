@@ -109,6 +109,7 @@ border-radius: 5px;
 border: 1px solid var(--main-border-color) ;
 height: 400px;
 padding: 1rem 2rem;
+position: relative
 }
 
 /* FOOTER */
@@ -127,4 +128,24 @@ padding: 1rem 2rem;
     "footer footer";
 }
 
+}
+
+.strength-indicator {
+    position: absolute;
+    font-size: 0.9rem;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    text-transform: capitalize;
+    color: #fff;
+    border-radius:0.5rem;
+}
+.strength-indicator.light {
+    background-color: rgb(52, 167, 52);
+}
+.strength-indicator.medium {
+    background-color: rgb(184, 175, 56);
+}
+.strength-indicator.strong {
+    background-color: rgb(146, 17, 17);
 }

@@ -301,54 +301,31 @@ const cocktails = [
   }
 ];
 // test
-let uniqueSpirits = [];
-let uniqueIngredients = [];
-let strengthLevels = [];
-let uniqueFlavors = [];
-let uniqueTags = [];
+let uniqueSpirits = getUniqueValues(cocktails, "baseSpirit");
+let uniqueIngredients = getUniqueValues(cocktails, "ingredients");
+let strengthLevels = getUniqueValues(cocktails, "strength");
+let uniqueFlavors = getUniqueValues(cocktails, "flavorProfile");
+let uniqueTags = getUniqueValues(cocktails, "tags");
 
 const spiritButtons = document.getElementById("spiritsList");
 const mainContent = document.getElementById("main");
 
-function getSpirits(cocktailList) {
+
+function getUniqueValues(cocktailList, attribute=null){   
+  let uniqueValues = [];
   for (let i = 0; i < cocktailList.length; i++) {
-    uniqueSpirits.push(cocktailList[i].baseSpirit);
+    if(Array.isArray(cocktailList[i][attribute])){
+      for (let j = 0; j < cocktailList[i][attribute].length; j++) {
+        uniqueValues.push(cocktailList[i][attribute][j]);
+      }
+    } else {
+      uniqueValues.push(cocktailList[i][attribute]);
+    }
   }
-  uniqueSpirits = Array.from(new Set(uniqueSpirits));
-}
-function getStrength(cocktailList) {
-  for (let i = 0; i < cocktailList.length; i++) {
-    strengthLevels.push(cocktailList[i].strength);
-  }
-  strengthLevels = Array.from(new Set(strengthLevels));
+  return Array.from(new Set(uniqueValues)).sort();
 }
 
 
-function getIng(cocktailList) {
-  for (let i = 0; i < cocktailList.length; i++) {
-    for (let j = 0; j < cocktailList[i].ingredients.length; j++) {
-      uniqueIngredients.push(cocktailList[i].ingredients[j]);
-    }
-  }
-  uniqueIngredients = Array.from(new Set(uniqueIngredients));
-}
-
-function getFlavors(cocktailList) {
-  for (let i = 0; i < cocktailList.length; i++) {
-    for (let j = 0; j < cocktailList[i].flavorProfile.length; j++) {
-      uniqueFlavors.push(cocktailList[i].flavorProfile[j]);
-    }
-  }
-  uniqueFlavors = Array.from(new Set(uniqueFlavors));
-}
-function getTags(cocktailList) {
-  for (let i = 0; i < cocktailList.length; i++) {
-    for (let j = 0; j < cocktailList[i].tags.length; j++) {
-      uniqueTags.push(cocktailList[i].tags[j]);
-    }
-  }
-  uniqueTags = Array.from(new Set(uniqueTags));
-}
 
 function filterBySpirit(spirit) {
   let filteredList = [];
@@ -397,26 +374,6 @@ function filterByIngredients(ing) {
 }
 
 
-getSpirits(cocktails);
-getIng(cocktails);
-getFlavors(cocktails);
-getTags(cocktails);
-getStrength(cocktails);
-console.log(uniqueSpirits);
-console.log(uniqueIngredients);
-console.log(uniqueFlavors);
-console.log(uniqueTags);
-console.log(strengthLevels);
-
-let filtered = filterBySpirit(uniqueSpirits[5]);
-console.log(filtered);
-
-filtered = filterByStrength(strengthLevels[2]);
-console.log(filtered);
-
-filtered = filterByIngredients([uniqueIngredients[4], uniqueIngredients[2]]);
-console.log(filtered);
-
 
 function createBtn(text) {
   const btn = document.createElement("li");
@@ -457,6 +414,7 @@ function createCocktailCard(cocktail) {
             <p class="description">
                 Lorem ipsum Atque sed, delectus 
             </p>
+            <div class="strength-indicator ${cocktail.strength}">${cocktail.strength}</div>
         </div>`;
   mainContent.innerHTML += newCard;
 }
