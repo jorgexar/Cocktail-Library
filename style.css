@@ -138,20 +138,24 @@ position: relative;
 .like-button{
     font-size: 1.5rem;
     cursor: pointer;
+    display: grid;
+    place-items: center;
     /* position: absolute;
     top: 0.1rem;
     left: 0.1rem;
      */
 }
-.like-button span#not-liked{
-    opacity: 0.6;
+.like-button .like-icon{
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 1rem;
+    background-color: rgba(184, 175, 56, 0.582);
+    color: black;
+    font-weight: 600;
 }
-.like-button .hidden{
-    display: none;
-    
-}
-.like-button span#not-liked:hover{
-    opacity: 1;
+.like-icon.liked{
+    background-color: rgb(65, 1, 65);
+    color: white;
 }
 /* FOOTER */
 .site-footer{

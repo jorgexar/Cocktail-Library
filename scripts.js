@@ -300,7 +300,14 @@ const cocktails = [
     flavorProfile: ["tropical", "sweet", "citrus"]
   }
 ];
-// This line was edited on laptop. 
+
+// Im too lazy to rewrite the properties.
+for(let i=0; i<cocktails.length; i++){
+  cocktails[i].id = i;
+  cocktails[i].liked = false;
+}
+
+
 let uniqueSpirits = getUniqueValues(cocktails, "baseSpirit");
 let uniqueIngredients = getUniqueValues(cocktails, "ingredients");
 let strengthLevels = getUniqueValues(cocktails, "strength");
@@ -328,28 +335,14 @@ function renderFiltered(filteredList) {
 
 function filterBySpirit(spirit) {
   let filteredList = [];
-  console.log(`Looking for cocktails with base of : ${spirit}`);
-  for (let i = 0; i < cocktails.length; i++) {
-    if (cocktails[i].baseSpirit === spirit) {
-      console.log(`Found : ${cocktails[i].name}`);
-      filteredList.push(cocktails[i]);
-    }
-  }
-
+  filteredList = cocktails.filter(cocktail => cocktail.baseSpirit === spirit);
   return filteredList;
 }
 
 
 function filterByStrength(str) {
   let filteredList = [];
-  console.log(`Looking for cocktails with strength of : ${str}`);
-  for (let i = 0; i < cocktails.length; i++) {
-    if (cocktails[i].strength === str) {
-      console.log(`Found : ${cocktails[i].name}`);
-      filteredList.push(cocktails[i]);
-    }
-  }
-  renderFiltered(filteredList);
+  filteredList = cocktails.filter(cocktail => cocktail.strength === str);
   return filteredList;
 }
 
@@ -415,11 +408,12 @@ function createCocktailCard(cocktail) {
                 Lorem ipsum Atque sed, delectus 
             </p>
             <div class="strength-indicator ${cocktail.strength}">${cocktail.strength}</div>
-            
         </div>`;
   mainContent.innerHTML += newCard;
+  
 }
-for (let x = 0; x < 10; x++) {
+const MAX_ITEMS_PER_PAGE = 15;
+for (let x = 0; x < MAX_ITEMS_PER_PAGE; x++) {
   createCocktailCard(cocktails[x]);
 }
 
@@ -432,12 +426,7 @@ for (let x = 0; x < 10; x++) {
 //   console.log(curQuery);
 // })
 
-function toggleLike(element) {
-  const notLiked = element.querySelector("#not-liked");
-  const liked = element.querySelector("#liked");
-  notLiked.classList.toggle("hidden");
-  liked.classList.toggle("hidden");
-}
+
 
 // const filterStr = document.getElementById("filter-str");
 // const filterIng = document.getElementById("filter-ing");
