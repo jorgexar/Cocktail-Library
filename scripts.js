@@ -310,18 +310,21 @@ let uniqueTags = getUniqueValues(cocktails, "tags");
 const spiritButtons = document.getElementById("spiritsList");
 const mainContent = document.getElementById("main");
 
-
-function getUniqueValues(cocktailList, attribute=null){   
-  let unique =[] ;
-    if(Array.isArray(cocktailList[0][attribute])){
-      unique = cocktailList.flatMap(cocktail => cocktail[attribute]);
-    } else {
-      unique = cocktailList.map(cocktail => cocktail[attribute]);
+function getUniqueValues(cocktailList, attribute = null) {
+  let unique = [];
+  if (Array.isArray(cocktailList[0][attribute])) {
+    unique = cocktailList.flatMap(cocktail => cocktail[attribute]);
+  } else {
+    unique = cocktailList.map(cocktail => cocktail[attribute]);
   }
+  // unique = unique.map(item => item.trim().toLowerCase());
   return Array.from(new Set(unique)).sort();
 }
 
-
+function renderFiltered(filteredList) {
+  mainContent.innerHTML = "";
+  filteredList.forEach((item) => createCocktailCard(item));
+}
 
 function filterBySpirit(spirit) {
   let filteredList = [];
@@ -336,6 +339,7 @@ function filterBySpirit(spirit) {
   return filteredList;
 }
 
+
 function filterByStrength(str) {
   let filteredList = [];
   console.log(`Looking for cocktails with strength of : ${str}`);
@@ -345,12 +349,13 @@ function filterByStrength(str) {
       filteredList.push(cocktails[i]);
     }
   }
-
+  renderFiltered(filteredList);
   return filteredList;
 }
 
 function filterByIngredients(ing) {
   let filteredList = [];
+  // ing = ing.map(item => item.trim().toLowerCase());
   console.log(`Looking for cocktails with ingredients of : ${ing}`);
   let count;
   for (let i = 0; i < cocktails.length; i++) {
@@ -365,7 +370,7 @@ function filterByIngredients(ing) {
       console.log(`:: ${cocktails[i].name} has ${count / ing.length * 100}% of ingredients you look for ::`);
     }
   }
-
+  renderFiltered(filteredList);
   return filteredList;
 }
 
@@ -377,8 +382,7 @@ function createBtn(text) {
   spiritButtons.appendChild(btn);
   btn.addEventListener("click", (e) => {
     filtered = filterBySpirit(text);
-    mainContent.innerHTML = "";
-    filtered.forEach((item) => createCocktailCard(item));
+    renderFiltered(filtered);
 
   })
 }
@@ -399,7 +403,7 @@ function showAll() {
 
 function createCocktailCard(cocktail) {
   let ings = "";
-  for(ing of cocktail.ingredients){
+  for (ing of cocktail.ingredients) {
     ings += `<li>${ing}</li>`;
   }
   let newCard = `<div class="cocktail-card">
@@ -411,18 +415,51 @@ function createCocktailCard(cocktail) {
                 Lorem ipsum Atque sed, delectus 
             </p>
             <div class="strength-indicator ${cocktail.strength}">${cocktail.strength}</div>
+            
         </div>`;
   mainContent.innerHTML += newCard;
 }
 for (let x = 0; x < 10; x++) {
-  createCocktailCard(cocktails[x]); 
+  createCocktailCard(cocktails[x]);
 }
 
 //search
 
-const searchBar = document.getElementById("search-bar");
-searchBar.addEventListener("keyup",()=>{
-  let curQuery = searchBar.value.trim();
-  
-  console.log(curQuery);
-})
+// const searchBar = document.getElementById("search-bar");
+// searchBar.addEventListener("keyup", () => {
+//   let curQuery = searchBar.value.trim();
+
+//   console.log(curQuery);
+// })
+
+function toggleLike(element) {
+  const notLiked = element.querySelector("#not-liked");
+  const liked = element.querySelector("#liked");
+  notLiked.classList.toggle("hidden");
+  liked.classList.toggle("hidden");
+}
+
+// const filterStr = document.getElementById("filter-str");
+// const filterIng = document.getElementById("filter-ing");
+// strengthLevels.forEach(level => {
+//   const btn = document.createElement("button");
+//   btn.textContent = level;
+//   btn.addEventListener("click", () => {
+//     filterByStrength(level);
+//   });
+//   filterStr.appendChild(btn);
+// });
+// uniqueIngredients.forEach(ing => {
+//   const check = document.createElement("input");
+//   check.type = "checkbox";
+//   check.id = `ingredient-${ing}`;
+//   const label = document.createElement("label");
+//   label.setAttribute("for", `ingredient-${ing}`);
+//   label.textContent = ing;
+//   check.addEventListener("click", () => {
+//     filterByIngredients([ing]);
+//   });
+//   filterIng.appendChild(check);
+//   filterIng.appendChild(label); 
+
+// });

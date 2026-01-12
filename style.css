@@ -104,14 +104,55 @@ align-content: flex-start;
 /* CARDS */
 .cocktail-card{
 /* background-color: var(--main-dark-blue); */
+display: flex;
+flex-direction: column;
+/* justify-content: space-between;  */
+max-width: 300px;
 background: linear-gradient(0deg, transparent 80%, rgba(106, 11, 143, 0.582));
 border-radius: 5px;
 border: 1px solid var(--main-border-color) ;
 height: 400px;
 padding: 1rem 2rem;
-position: relative
+position: relative;
+
 }
 
+.description{
+    max-height: 100px;
+    
+}
+.card-body{
+    padding: 1rem 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: scroll;
+}
+.card-footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(55, 8, 77);
+}
+.like-button{
+    font-size: 1.5rem;
+    cursor: pointer;
+    /* position: absolute;
+    top: 0.1rem;
+    left: 0.1rem;
+     */
+}
+.like-button span#not-liked{
+    opacity: 0.6;
+}
+.like-button .hidden{
+    display: none;
+    
+}
+.like-button span#not-liked:hover{
+    opacity: 1;
+}
 /* FOOTER */
 .site-footer{
     grid-area: footer;
@@ -148,4 +189,16 @@ position: relative
 }
 .strength-indicator.strong {
     background-color: rgb(146, 17, 17);
+}
+
+.filter{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+.filter input[type="checkbox"]{
+    padding: 1rem;
+    cursor: pointer;
 }
