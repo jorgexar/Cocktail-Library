@@ -309,7 +309,7 @@ for (let i = 0; i < cocktails.length; i++) {
 const mainContent = document.getElementById("main");
 const spiritButtons = document.getElementById("spiritsList");
 
-const MAX_ITEMS_PER_PAGE = cocktails.length-1;
+const MAX_ITEMS_PER_PAGE = cocktails.length;
 for (let x = 0; x < MAX_ITEMS_PER_PAGE; x++) {
   createCocktailCard(cocktails[x]);
 }
@@ -320,11 +320,6 @@ let strengthLevels = getUniqueValues(cocktails, "strength");
 let uniqueFlavors = getUniqueValues(cocktails, "flavorProfile");
 let uniqueTags = getUniqueValues(cocktails, "tags");
 
-let filters = {
-  spirit: null,
-  ingredients: [], 
-  strength: null
-};
 function getUniqueValues(cocktailList, attribute = null) {
   let unique = [];
   if(!attribute){
@@ -348,25 +343,25 @@ function renderFiltered(filteredList) {
   }
   // filteredList.forEach((item) => createCocktailCard(item));
 }
-// spirit, ings = [], strength = ""
-function applyFilters(filters) {
+
+function applyFilters(spirit, ings = [], strength = "") {
   let filteredList = cocktails;
   let totalFilters = []
   
-  if (filters.spirit) {
-    totalFilters.push(filters.spirit);
-    filteredList = filteredList.filter(cocktail => cocktail.baseSpirit === filters.spirit);
+  if (spirit) {
+    totalFilters.push(spirit);
+    filteredList = filteredList.filter(cocktail => cocktail.baseSpirit === spirit);
   }
-  if (filters.ingredients.length > 0) {
-    totalFilters.push(...filters.ingredients);
-    filteredList = filterByIngredients(filters.ingredients,filteredList);
+  if (ings.length > 0) {
+    totalFilters.push(...ings);
+    filteredList = filterByIngredients(ings,filteredList);
   }
-  if (filters.strength) {
-    totalFilters.push(filters.strength);
-    filteredList = filteredList.filter(cocktail => cocktail.strength === filters.strength);
+  if (strength) {
+    totalFilters.push(strength);
+    filteredList = filteredList.filter(cocktail => cocktail.strength === strength);
   }
 console.log(`Applying ${totalFilters} filters...`);
-  console.log(totalFilters)   
+  console.log(totalFilters)
   return filteredList;
 }
 
@@ -395,13 +390,11 @@ function filterByIngredients(ing, list) {
 
 function createBtn(spirit) {
   const btn = document.createElement("li");
-  filters.spirit = spirit; // reset filter
-  
   btn.textContent = spirit;
   spiritButtons.appendChild(btn);
   btn.addEventListener("click", (e) => {
     // filtered = filterBySpirit(text);
-    filtered = applyFilters(filters);
+    filtered = applyFilters(spirit);
     console.log(`Filtering by spirit: ${spirit}`);
     renderFiltered(filtered);
 
