@@ -379,7 +379,9 @@ function applyFilters(filters) {
   }
   return filteredList;
 }
-
+function runFilters(){
+  renderFiltered(applyFilters(activeFilters));
+}
 ///FILTERS END
 
 function createBtn(spirit) {
