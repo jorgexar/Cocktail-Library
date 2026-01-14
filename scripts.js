@@ -366,19 +366,20 @@ function setFilters(spirit, ings = [], strength) {
     activeFilters.strength = strength;
   }
 }
-function applyFilters(spirit = null, ings = [], strength = null) {
+function applyFilters(filters) {
   let filteredList = cocktails;
-  if (spirit) {
-    filteredList = filteredList.filter(cocktail => cocktail.baseSpirit === spirit);
+  if (filters.spirit) {
+    filteredList = filteredList.filter(cocktail => cocktail.baseSpirit === filters.spirit);
   }
-  if (ings.length > 0) {
-    filteredList = filterByIngredients(ings, filteredList);
+  if (filters.ingredients.length > 0) {
+    filteredList = filteredList.filter(cocktail => {return filters.ingredients.some(i => cocktail.ingredients.includes(i))});
   }
-  if (strength) {
-    filteredList = filteredList.filter(cocktail => cocktail.strength === strength);
+  if (filters.strength) {
+    filteredList = filteredList.filter(cocktail => cocktail.strength === filters.strength);
   }
   return filteredList;
 }
+
 ///FILTERS END
 
 function createBtn(spirit) {
@@ -387,7 +388,7 @@ function createBtn(spirit) {
   spiritList.appendChild(btn);
   btn.addEventListener("click", (e) => {
     setFilters(spirit);
-    filtered = applyFilters(activeFilters.spirit);
+    filtered = applyFilters(activeFilters);
     console.log(`Filtering by spirit: ${spirit}`);
     renderFiltered(filtered);
 
@@ -395,10 +396,8 @@ function createBtn(spirit) {
   return btn;
 }
 
-
-
-
 function showAll() {
+  setFilters(null, [], null);
   mainContent.innerHTML = "";
   for (let i = 0; i < cocktails.length; i++) {
     createCocktailCard(cocktails[i]);
