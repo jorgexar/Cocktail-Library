@@ -306,8 +306,15 @@ for (let i = 0; i < cocktails.length; i++) {
   cocktails[i].id = i;
   cocktails[i].liked = false;
 }
+
+let activeFilters = {
+  spirit: null,
+  ingredients: [],
+  strength: null
+};
 const mainContent = document.getElementById("main");
-const spiritButtons = document.getElementById("spiritsList");
+const spiritList = document.getElementById("spiritsList");
+
 
 const MAX_ITEMS_PER_PAGE = cocktails.length;
 for (let x = 0; x < MAX_ITEMS_PER_PAGE; x++) {
@@ -319,6 +326,8 @@ let uniqueIngredients = getUniqueValues(cocktails, "ingredients");
 let strengthLevels = getUniqueValues(cocktails, "strength");
 let uniqueFlavors = getUniqueValues(cocktails, "flavorProfile");
 let uniqueTags = getUniqueValues(cocktails, "tags");
+
+const spiritButtons = uniqueSpirits.map(spirit => spiritList.appendChild(createBtn(spirit))); 
 
 function getUniqueValues(cocktailList, attribute = null) {
   let unique = [];
@@ -337,74 +346,56 @@ function getUniqueValues(cocktailList, attribute = null) {
 function renderFiltered(filteredList) {
   mainContent.innerHTML = "";
   for(let i=0; i<filteredList.length; i++) {
-    if(i >= MAX_ITEMS_PER_PAGE) break;
+    if(i > MAX_ITEMS_PER_PAGE) break;
     console.log(`:: ${filteredList[i].name} ::`);
     createCocktailCard(filteredList[i]);
   }
   // filteredList.forEach((item) => createCocktailCard(item));
 }
 
-function applyFilters(spirit, ings = [], strength = "") {
+///FILTERS
+function setFilters(spirit, ings = [], strength) {
+  if(spirit){
+    activeFilters.spirit = spirit;
+  }
+  if(ings.length > 0){
+    activeFilters.ingredients = activeFilters.ingredients.concat(ings); 
+    activeFilters.ingredients = [...new Set(activeFilters.ingredients)];
+  }
+  if(strength){
+    activeFilters.strength = strength;
+  }
+}
+function applyFilters(spirit = null, ings = [], strength = null) {
   let filteredList = cocktails;
-  let totalFilters = []
-  
   if (spirit) {
-    totalFilters.push(spirit);
     filteredList = filteredList.filter(cocktail => cocktail.baseSpirit === spirit);
   }
   if (ings.length > 0) {
-    totalFilters.push(...ings);
-    filteredList = filterByIngredients(ings,filteredList);
+    filteredList = filterByIngredients(ings, filteredList);
   }
   if (strength) {
-    totalFilters.push(strength);
     filteredList = filteredList.filter(cocktail => cocktail.strength === strength);
   }
-console.log(`Applying ${totalFilters} filters...`);
-  console.log(totalFilters)
   return filteredList;
 }
-
-function filterByIngredients(ing, list) {
-  let filteredList = [];
-  // ing = ing.map(item => item.trim().toLowerCase());
-  console.log(`Looking for cocktails with ingredients of : ${ing}`);
-  let count;
-  for (let i = 0; i < list.length; i++) {
-    count = 0;
-    for (let j = 0; j < ing.length; j++) {
-      if (list[i].ingredients.includes(ing[j])) {
-        count++
-      }
-    }
-    if (count > 0) {
-      filteredList.push(list[i]);
-      console.log(`:: ${list[i].name} has ${count / ing.length * 100}% of ingredients you look for ::`);
-    }
-  }
-  // renderFiltered(filteredList);
-  return filteredList;
-}
-
-
+///FILTERS END
 
 function createBtn(spirit) {
   const btn = document.createElement("li");
   btn.textContent = spirit;
-  spiritButtons.appendChild(btn);
+  spiritList.appendChild(btn);
   btn.addEventListener("click", (e) => {
-    // filtered = filterBySpirit(text);
-    filtered = applyFilters(spirit);
+    setFilters(spirit);
+    filtered = applyFilters(activeFilters.spirit);
     console.log(`Filtering by spirit: ${spirit}`);
     renderFiltered(filtered);
 
   })
+  return btn;
 }
 
 
-for (let i = 0; i < uniqueSpirits.length; i++) {
-  createBtn(String(uniqueSpirits[i]));
-}
 
 
 function showAll() {
