@@ -14,20 +14,66 @@
 
         <header class="site-header">
             <div class="logo">Cocktail Library</div>
-            <button onclick="setFilters(null,[],'light')">Light</button>
+            <!-- <button onclick="setFilters(null,[],'light')">Light</button>
             <button onclick="setFilters(null,[],'medium')">Medium</button>
-            <button onclick="setFilters(null,[],'strong')">Strong</button>
-            <button onclick="runFilters()" style="background-color: green; color: white;">Show Filtered</button>
+            <button onclick="setFilters(null,[],'strong')">Strong</button> -->
+
             <!-- <div class="search-bar"><input type="text" name="search" id="search-bar"></div> -->
 
         </header>
         <div class="sidebar">
             <nav class="nav-bar">
-                <ul id="spiritsList">
+
+                <!-- <ul id="spiritsList">
                     <li onclick="showAll()">All</li>
-                </ul>
+                </ul> -->
                 <div class="filter" id="filter-str">
-                    <h1>Strengh</h1>
+                    <!-- <button onclick="runFilters()" style="background-color: green; color: white;">Show Filtered</button> -->
+                    <form action="#"></form>
+                    <fieldset>
+                        <legend>
+                            <h2>Spirits</h2>
+                        </legend>
+                        <div id="spiritsList">
+                            <div class="radio-option">
+                                <input type="radio" id="all" name="spirit" value="all" onclick="showAll()" checked>
+                                <label for="all">Show all</label><br>
+                            </div>
+                            <!-- <input type="radio" id="rum" name="spirit" value="rum" onclick="setFilters('White Rum', [], null)">
+                            <label for="rum">White Rum</label><br>
+                            <input type="radio" id="vodka" name="spirit" value="vodka" onclick="setFilters('Vodka', [], null)">
+                            <label for="vodka">Vodka</label><br>
+                            <input type="radio" id="gin" name="spirit" value="gin" onclick="setFilters('Gin', [], null)">
+                            <label for="gin">Gin</label><br>
+                            <input type="radio" id="tequila" name="spirit" value="tequila" onclick="setFilters('Tequila', [], null)">
+                            <label for="tequila">Tequila</label><br>
+                            <input type="radio" id="whiskey" name="spirit" value="whiskey" onclick="setFilters('Whiskey', [], null)">
+                            <label for="whiskey">Whiskey</label><br> -->
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>
+                            <h2>Strength</h2>
+                        </legend>
+                        <div class="radio-option">
+                            <input type="radio" id="light" name="strength" value="light"
+                                onclick="setFilters(null,[], 'light'); runFilters();">
+                            <label for="light">Light</label><br>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="medium" name="strength" value="medium"
+                                onclick="setFilters(null,[], 'medium'); runFilters();">
+                            <label for="medium">Medium</label><br>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="strong" name="strength" value="strong"
+                                onclick="setFilters(null,[], 'strong'); runFilters();">
+                            <label for="strong">Strong</label><br>
+                        </div>
+
+                    </fieldset>
+                    </form>
+
 
                 </div>
                 <div class="filter" id="filter-ing">

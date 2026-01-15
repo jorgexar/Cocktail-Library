@@ -327,7 +327,7 @@ let strengthLevels = getUniqueValues(cocktails, "strength");
 let uniqueFlavors = getUniqueValues(cocktails, "flavorProfile");
 let uniqueTags = getUniqueValues(cocktails, "tags");
 
-const spiritButtons = uniqueSpirits.map(spirit => spiritList.appendChild(createBtn(spirit))); 
+const radioSpirits = uniqueSpirits.map(spirit => createSpiritRadio(spirit));
 
 function getUniqueValues(cocktailList, attribute = null) {
   let unique = [];
@@ -343,15 +343,7 @@ function getUniqueValues(cocktailList, attribute = null) {
   return Array.from(new Set(unique)).sort();
 }
 
-function renderFiltered(filteredList) {
-  mainContent.innerHTML = "";
-  for(let i=0; i<filteredList.length; i++) {
-    if(i > MAX_ITEMS_PER_PAGE) break;
-    console.log(`:: ${filteredList[i].name} ::`);
-    createCocktailCard(filteredList[i]);
-  }
-  // filteredList.forEach((item) => createCocktailCard(item));
-}
+
 
 ///FILTERS
 function setFilters(spirit, ings = [], strength) {
@@ -379,25 +371,22 @@ function applyFilters(filters) {
   }
   return filteredList;
 }
+
+///FILTERS END
+
+function createSpiritRadio(spirit){
+  let radio = document.createElement("div");
+  radio.classList.add("radio-option");
+  radio.innerHTML = `<input type="radio" name="spirit" id="${spirit}" value="${spirit}" onclick="setFilters('${spirit}');runFilters();">
+                     <label for="${spirit}">${spirit}</label>`;
+  spiritList.appendChild(radio);
+  return radio;
+}
+
+
 function runFilters(){
   renderFiltered(applyFilters(activeFilters));
 }
-///FILTERS END
-
-function createBtn(spirit) {
-  const btn = document.createElement("li");
-  btn.textContent = spirit;
-  spiritList.appendChild(btn);
-  btn.addEventListener("click", (e) => {
-    setFilters(spirit);
-    filtered = applyFilters(activeFilters);
-    console.log(`Filtering by spirit: ${spirit}`);
-    renderFiltered(filtered);
-
-  })
-  return btn;
-}
-
 function showAll() {
   setFilters(null, [], null);
   mainContent.innerHTML = "";
@@ -405,7 +394,18 @@ function showAll() {
     createCocktailCard(cocktails[i]);
   }
 }
-
+function renderFiltered(filteredList) {
+  mainContent.innerHTML = "";
+  if(filteredList.length === 0) {
+    mainContent.innerHTML = "<h2 style='text-align: center; width: 100%;'>No cocktails match the selected filters.</h2>";
+    return;
+  }
+  for(let i=0; i<filteredList.length; i++) {
+    if(i > MAX_ITEMS_PER_PAGE) break;
+    console.log(`:: ${filteredList[i].name} ::`);
+    createCocktailCard(filteredList[i]);
+  }
+}
 
 function createCocktailCard(cocktail) {
   let ings = "";
@@ -426,39 +426,3 @@ function createCocktailCard(cocktail) {
 
 }
 
-
-//search
-
-// const searchBar = document.getElementById("search-bar");
-// searchBar.addEventListener("keyup", () => {
-//   let curQuery = searchBar.value.trim();
-
-//   console.log(curQuery);
-// })
-
-
-
-// const filterStr = document.getElementById("filter-str");
-// const filterIng = document.getElementById("filter-ing");
-// strengthLevels.forEach(level => {
-//   const btn = document.createElement("button");
-//   btn.textContent = level;
-//   btn.addEventListener("click", () => {
-//     filterByStrength(level);
-//   });
-//   filterStr.appendChild(btn);
-// });
-// uniqueIngredients.forEach(ing => {
-//   const check = document.createElement("input");
-//   check.type = "checkbox";
-//   check.id = `ingredient-${ing}`;
-//   const label = document.createElement("label");
-//   label.setAttribute("for", `ingredient-${ing}`);
-//   label.textContent = ing;
-//   check.addEventListener("click", () => {
-//     filterByIngredients([ing]);
-//   });
-//   filterIng.appendChild(check);
-//   filterIng.appendChild(label);
-
-// });
