@@ -93,6 +93,15 @@ transition: transform 0.5s ease-out;
     margin-bottom: 0.5rem;
     
 }
+.radio-option input{
+    display: none;
+}
+.radio-option label{
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 5px 0px;
+}
 .radio-option:first-child{
     background-color: rgb(83, 16, 78);
 }

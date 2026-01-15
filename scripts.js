@@ -377,7 +377,7 @@ function applyFilters(filters) {
 function createSpiritRadio(spirit){
   let radio = document.createElement("div");
   radio.classList.add("radio-option");
-  radio.innerHTML = `<input type="radio" name="spirit" id="${spirit}" value="${spirit}" onclick="setFilters('${spirit}');runFilters();">
+  radio.innerHTML = `<input type="radio" name="spirit" id="${spirit}" value="${spirit}" onclick="setFilters('${spirit}');runFilters();console.log(event);">
                      <label for="${spirit}">${spirit}</label>`;
   spiritList.appendChild(radio);
   return radio;
