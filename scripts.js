@@ -331,10 +331,10 @@ const radioSpirits = uniqueSpirits.map(spirit => createSpiritRadio(spirit));
 
 function getUniqueValues(cocktailList, attribute = null) {
   let unique = [];
-  if(!attribute){
+  if (!attribute) {
     return [];
-  } 
-    
+  }
+
   if (Array.isArray(cocktailList[0][attribute])) {
     unique = cocktailList.flatMap(cocktail => cocktail[attribute]);
   } else {
@@ -347,14 +347,16 @@ function getUniqueValues(cocktailList, attribute = null) {
 
 ///FILTERS
 function setFilters(spirit, ings = [], strength) {
-  if(spirit){
+  if (spirit) {
     activeFilters.spirit = spirit;
   }
-  if(ings.length > 0){
-    activeFilters.ingredients = activeFilters.ingredients.concat(ings); 
+  if (ings.length > 0) {
+    activeFilters.ingredients = activeFilters.ingredients.concat(ings);
     activeFilters.ingredients = [...new Set(activeFilters.ingredients)];
   }
-  if(strength){
+  if (strength === 'all') {
+    activeFilters.strength = null;
+  } else if (strength) {
     activeFilters.strength = strength;
   }
 }
@@ -364,7 +366,7 @@ function applyFilters(filters) {
     filteredList = filteredList.filter(cocktail => cocktail.baseSpirit === filters.spirit);
   }
   if (filters.ingredients.length > 0) {
-    filteredList = filteredList.filter(cocktail => {return filters.ingredients.some(i => cocktail.ingredients.includes(i))});
+    filteredList = filteredList.filter(cocktail => { return filters.ingredients.some(i => cocktail.ingredients.includes(i)) });
   }
   if (filters.strength) {
     filteredList = filteredList.filter(cocktail => cocktail.strength === filters.strength);
@@ -374,7 +376,7 @@ function applyFilters(filters) {
 
 ///FILTERS END
 
-function createSpiritRadio(spirit){
+function createSpiritRadio(spirit) {
   let radio = document.createElement("div");
   radio.classList.add("radio-option");
   radio.innerHTML = `<input type="radio" name="spirit" id="${spirit}" value="${spirit}" onclick="setFilters('${spirit}');runFilters();console.log(event);">
@@ -384,7 +386,7 @@ function createSpiritRadio(spirit){
 }
 
 
-function runFilters(){
+function runFilters() {
   renderFiltered(applyFilters(activeFilters));
 }
 function showAll() {
@@ -396,12 +398,12 @@ function showAll() {
 }
 function renderFiltered(filteredList) {
   mainContent.innerHTML = "";
-  if(filteredList.length === 0) {
+  if (filteredList.length === 0) {
     mainContent.innerHTML = "<h2 style='text-align: center; width: 100%;'>No cocktails match the selected filters.</h2>";
     return;
   }
-  for(let i=0; i<filteredList.length; i++) {
-    if(i > MAX_ITEMS_PER_PAGE) break;
+  for (let i = 0; i < filteredList.length; i++) {
+    if (i > MAX_ITEMS_PER_PAGE) break;
     console.log(`:: ${filteredList[i].name} ::`);
     createCocktailCard(filteredList[i]);
   }

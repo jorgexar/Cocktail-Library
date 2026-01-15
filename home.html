@@ -36,8 +36,8 @@
                         </legend>
                         <div id="spiritsList">
                             <div class="radio-option">
-                                <input type="radio" id="all" name="spirit" value="all" onclick="showAll()" checked>
-                                <label for="all">Show all</label>
+                                <input type="radio" id="all_spirits" name="spirit" value="all_spirits " onclick="showAll()" checked>
+                                <label for="all_spirits">Show all</label>
                             </div>
                             <!-- <input type="radio" id="rum" name="spirit" value="rum" onclick="setFilters('White Rum', [], null)">
                             <label for="rum">White Rum</label><br>
@@ -55,6 +55,11 @@
                         <legend>
                             <h2>Strength</h2>
                         </legend>
+                        <div class="radio-option">
+                            <input type="radio" id="all_str" name="strength" value="all_str"
+                                onclick="setFilters(null,[], 'all'); runFilters();">
+                            <label for="all_str">All</label>
+                        </div>
                         <div class="radio-option">
                             <input type="radio" id="light" name="strength" value="light"
                                 onclick="setFilters(null,[], 'light'); runFilters();">
