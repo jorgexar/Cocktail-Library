@@ -7,23 +7,62 @@
     <title>Cocktail Library</title>
     <!-- <link rel="stylesheet" href="no-style.css"> -->
     <style>
-        .layout{
+        .layout {
             display: flex;
             flex-grow: 1;
             flex-shrink: 0;
             flex-direction: row;
-            
-            
+
+
         }
-        .cocktail-card{
+
+        .card {
             background-color: rgb(184, 184, 184);
             height: 50vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 1rem;
         }
-        .main-content{
+
+        .main-content {
             display: flex;
             gap: 1rem;
             flex-grow: 0;
             flex-wrap: wrap;
+        }
+
+        .strength-indicator {
+            position: absolute;
+            font-size: 0.9rem;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            text-transform: capitalize;
+            color: #fff;
+            border-radius: 0.5rem;
+        }
+
+        .strength-indicator.light {
+            background-color: rgb(52, 167, 52);
+        }
+
+        .strength-indicator.medium {
+            background-color: rgb(184, 175, 56);
+        }
+
+        .strength-indicator.strong {
+            background-color: rgb(146, 17, 17);
+        }
+        .card-footer{
+            text-align: center;
+        }
+        .like-button{
+            font-size: 1.5rem;
+        }
+        .like-button span{
         }
     </style>
 </head>
@@ -56,7 +95,8 @@
                         </legend>
                         <div id="spiritsList">
                             <div class="radio-option">
-                                <input type="radio" id="all_spirits" name="spirit" value="all_spirits " onclick="showAll()" checked>
+                                <input type="radio" id="all_spirits" name="spirit" value="all_spirits "
+                                    onclick="showAll()" checked>
                                 <label for="all_spirits">Show all</label>
                             </div>
                         </div>
@@ -99,14 +139,33 @@
         </div>
 
         <main class="main-content" id="main">
-            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="title">Cocktail Title</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Base</li>
+                        <li>Sweet</li>
+                        <li>Sour</li>
+                    </ul>
+                    <p>Description or maybe the method of making</p>
+                </div>
+                <div class="card-footer">
+                    <div class="like-button">
+                        <span>-</span>
+                        <span>+</span>
+                    </div>
+                    <div class="strength-indicator ${cocktail.strength}">Strength</div>
+                </div>
+            </div>
         </main>
-        <footer class="site-footer">
+        <!-- <footer class="site-footer">
             <p>Copyright 2025@ Jorge Xar</p>
-        </footer>
+        </footer> -->
     </div>
-    
-    <script src="scripts.js" ></script>
+
+    <script src="scripts.js"></script>
 </body>
 
 </html>

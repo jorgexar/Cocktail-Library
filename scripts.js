@@ -311,6 +311,16 @@ let activeFilters = {
   ingredients: [],
   strength: null
 };
+
+const uniqueValues = {
+  spirits: getUniqueValues(cocktails, "baseSpirit"),
+  ingredients: getUniqueValues(cocktails, "ingredients"),
+  strength: getUniqueValues(cocktails, "strength"),
+  flavors: getUniqueValues(cocktails, "flavorProfile"),
+  tags: getUniqueValues(cocktails, "tags")
+
+};
+
 const mainContent = document.getElementById("main");
 const spiritList = document.getElementById("spiritsList");
 
@@ -320,13 +330,7 @@ for (let x = 0; x < MAX_ITEMS_PER_PAGE; x++) {
   createCocktailCard(cocktails[x]);
 }
 
-let uniqueSpirits = getUniqueValues(cocktails, "baseSpirit");
-let uniqueIngredients = getUniqueValues(cocktails, "ingredients");
-let strengthLevels = getUniqueValues(cocktails, "strength");
-let uniqueFlavors = getUniqueValues(cocktails, "flavorProfile");
-let uniqueTags = getUniqueValues(cocktails, "tags");
-
-const radioSpirits = uniqueSpirits.map(spirit => createSpiritRadio(spirit));
+const radioSpirits = uniqueValues.spirits.map(spirit => createSpiritRadio(spirit));
 
 function getUniqueValues(cocktailList, attribute = null) {
   let unique = [];
@@ -345,6 +349,7 @@ function getUniqueValues(cocktailList, attribute = null) {
 
 
 ///FILTERS
+
 function setFilters(spirit, ings = [], strength) {
   if (spirit) {
     activeFilters.spirit = spirit;
@@ -359,6 +364,7 @@ function setFilters(spirit, ings = [], strength) {
     activeFilters.strength = strength;
   }
 }
+
 function applyFilters(filters) {
   let filteredList = cocktails;
   if (filters.spirit) {
@@ -373,6 +379,10 @@ function applyFilters(filters) {
   return filteredList;
 }
 
+function runFilters() {
+  renderFiltered(applyFilters(activeFilters));
+}
+
 ///FILTERS END
 
 function createSpiritRadio(spirit) {
@@ -385,9 +395,7 @@ function createSpiritRadio(spirit) {
 }
 
 
-function runFilters() {
-  renderFiltered(applyFilters(activeFilters));
-}
+
 function showAll() {
   setFilters(null, [], null);
   mainContent.innerHTML = "";
@@ -408,22 +416,29 @@ function renderFiltered(filteredList) {
   }
 }
 
+
 function createCocktailCard(cocktail) {
   let ings = "";
   for (ing of cocktail.ingredients) {
-    ings += `<li>${ing}</li>`;
+    ings += `<li>${ing}</li>`
   }
-  let newCard = `<div class="cocktail-card">
-            <h3 class="cocktail-title">${cocktail.name}</h3>
-            <ul class="ingredients-list">
-                ${ings}
-            </ul>
-            <p class="description">
-                Lorem ipsum Atque sed, delectus 
-            </p>
-            <div class="strength-indicator ${cocktail.strength}">${cocktail.strength}</div>
-        </div>`;
-  mainContent.innerHTML += newCard;
-
+  let card = ` <div class="card">
+                <div class="card-header">
+                    <h3 class="title">${cocktail.name}</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        ${ings}
+                    </ul>
+                    <p>Description or maybe the method of making</p>
+                </div>
+                <div class="card-footer">
+                    <div class="like-button">
+                        <span>+</span>
+                        <span>-</span>
+                    </div>
+                    <div class="strength-indicator ${cocktail.strength}">${cocktail.strength}</div>
+                </div>
+  `;
+  mainContent.innerHTML += card;
 }
-
