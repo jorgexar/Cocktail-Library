@@ -5,7 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cocktail Library</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="no-style.css"> -->
+    <style>
+        .layout{
+            display: flex;
+            flex-grow: 1;
+            flex-shrink: 0;
+            flex-direction: row;
+            
+            
+        }
+        .cocktail-card{
+            background-color: rgb(184, 184, 184);
+            height: 50vh;
+        }
+        .main-content{
+            display: flex;
+            gap: 1rem;
+            flex-grow: 0;
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,16 +59,6 @@
                                 <input type="radio" id="all_spirits" name="spirit" value="all_spirits " onclick="showAll()" checked>
                                 <label for="all_spirits">Show all</label>
                             </div>
-                            <!-- <input type="radio" id="rum" name="spirit" value="rum" onclick="setFilters('White Rum', [], null)">
-                            <label for="rum">White Rum</label><br>
-                            <input type="radio" id="vodka" name="spirit" value="vodka" onclick="setFilters('Vodka', [], null)">
-                            <label for="vodka">Vodka</label><br>
-                            <input type="radio" id="gin" name="spirit" value="gin" onclick="setFilters('Gin', [], null)">
-                            <label for="gin">Gin</label><br>
-                            <input type="radio" id="tequila" name="spirit" value="tequila" onclick="setFilters('Tequila', [], null)">
-                            <label for="tequila">Tequila</label><br>
-                            <input type="radio" id="whiskey" name="spirit" value="whiskey" onclick="setFilters('Whiskey', [], null)">
-                            <label for="whiskey">Whiskey</label><br> -->
                         </div>
                     </fieldset>
                     <fieldset>
@@ -89,65 +99,14 @@
         </div>
 
         <main class="main-content" id="main">
-            <!-- <div class="cocktail-card">
-          <div class="card-body">
-
-          
-            <h3 class="cocktail-title">Placeholder</h3>
-            <ul class="ingredients-list">
-                <li>50ml White Rum</li>
-                <li>25ml Lime Juice</li>
-                <li>25ml Simple Syrup</li>
-            </ul>
-            <div class="description">
-
-                <p class="description">
-                    Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit.
-                    Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit.
-                    Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit.
-                    Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit.
-
-                    
-                    
-                </p>
-            </div>
-            <div class="strength-indicator strong">Strong</div>
-            </div>
-            <div class="card-footer">
-                <div class="like-button" onclick="toggleLike(this)">
-                    <span id="not-liked">🤍</span>
-                    <span id="liked" class="hidden" >❤️</span>
-                </div>
-                
-            </div>
-        </div> -->
-
-            <!-- <div class="cocktail-card">
-            <h3 class="cocktail-title">Daquiri</h3>
-            <ul class="ingredients-list">
-                <li>50ml White Rum</li>
-                <li>25ml Lime Juice</li>
-                <li>25ml Simple Syrup</li>
-                <li>50ml White Rum</li>
-                <li>25ml Lime Juice</li>
-                <li>25ml Simple Syrup</li>
-            </ul>
-            <p class="description">
-                Lorem ipsum dolor sit
-                amet consectetur adipisicing elit.
-                Facilis quasi qui repudiandae? Atque sed, delectus 
-            </p>
-        </div> -->
+            
         </main>
         <footer class="site-footer">
             <p>Copyright 2025@ Jorge Xar</p>
         </footer>
     </div>
-    <script src="scripts.js"></script>
+    
+    <script src="scripts.js" ></script>
 </body>
 
 </html>
