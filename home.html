@@ -16,16 +16,19 @@
         <div class="sidebar">
             <nav class="nav-bar">
                 <div class="filter" id="filter-str">
-                    <fieldset id="ingFilters">
+                    <fieldset >
                         <legend>
-                            <h2>Ingredients</h2>
+                            <h2 onclick="document.getElementById('ingFilters').classList.toggle('open')" >Ingredients</h2>
                         </legend>
+                        <div id="ingFilters" class="filterList ">
+
+                        </div>
                     </fieldset>
                     <fieldset>
                         <legend>
                             <h2 onclick="document.getElementById('spiritsList').classList.toggle('open')">Spirits</h2>
                         </legend>
-                        <div id="spiritsList" class="filterList open">
+                        <div id="spiritsList" class="filterList ">
                             <div class="radio-option">
                                 <input type="radio" id="all_spirits" name="spirit" value="all_spirits "
                                     onclick="setFilterSpirit(null); runFilters();" checked>
@@ -35,8 +38,11 @@
                     </fieldset>
                     <fieldset>
                         <legend>
-                            <h2>Strength</h2>
+                            <h2 onclick="document.getElementById('strList').classList.toggle('open')">Strength</h2>
                         </legend>
+                        <div id="strList" class="filterList ">
+                            
+                       
                         <div class="radio-option">
                             <input type="radio" id="all_str" name="strength" value="all_str"
                                 onclick="setFilterStrength(null); runFilters();">
@@ -57,7 +63,7 @@
                                 onclick="setFilterStrength('strong'); runFilters();">
                             <label for="strong">Strong</label>
                         </div>
-
+                         </div>
                     </fieldset>
                     </form>
                 </div>

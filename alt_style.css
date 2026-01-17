@@ -104,6 +104,7 @@ legend h2::after {
     grid-area: aside;
     transition: transform 0.5s ease-out;
     overflow: scroll;
+    background: linear-gradient(0deg, rgba(106, 11, 143, 0.582), transparent 50%, rgba(106, 11, 143, 0.582), rgba(0, 0, 0, 0.8) 97%);
 }
 
 .closed {
@@ -244,5 +245,5 @@ input:hover {
     gap: 0.5rem;
     padding: 2px;
 
-    background: linear-gradient(0deg, rgba(106, 11, 143, 0.582), transparent 50%, rgba(106, 11, 143, 0.582), rgba(0, 0, 0, 0.8) 97%);
+   
 }

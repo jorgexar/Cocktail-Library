@@ -448,13 +448,16 @@ function createCocktailCard(cocktail) {
   }
   let newCard = `<div class="cocktail-card">
                 <h3 class="cocktail-title">${cocktail.name}</h3>
+                <div class="card-body">
+                <span class="base-spirit">Base Spirit: ${cocktail.baseSpirit}</span>
+                
                 <p>
                     <strong>Ingredients</strong> : ${cocktail.ingredients.join(",")}
                 </p>
+                </div>
                     <div class="strength-indicator ${cocktail.strength}">${cocktail.strength}</div>
 
                 <div class="card-footer">
-                    <span class="base-spirit">Base Spirit: ${cocktail.baseSpirit}</span>
 
                 </div>
             </div>`;
