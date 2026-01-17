@@ -326,7 +326,8 @@ let strengthLevels = getUniqueValues(cocktails, "strength");
 let uniqueFlavors = getUniqueValues(cocktails, "flavorProfile");
 let uniqueTags = getUniqueValues(cocktails, "tags");
 uniqueIngredients = uniqueIngredients.filter(item => !uniqueSpirits.includes(item));
-const radioSpirits = uniqueSpirits.map(spirit => createSpiritRadio(spirit));
+const radioSpirits = uniqueSpirits.map(spirit => createRadio(spirit));
+const ingCheckboxes = uniqueIngredients.map(ing => createCheckbox(ing));
 
 function getUniqueValues(cocktailList, attribute = null) {
   let unique = [];
@@ -349,8 +350,16 @@ function setFilterSpirit(spirit) {
   activeFilters.spirit = spirit;
 }
 
-function setFilterIngredients(ingredients) {
-  activeFilters.ingredients = ingredients;
+function setFilterIngredients(ingredient) {
+  if(activeFilters.ingredients.includes(ingredient)){
+    let index = activeFilters.ingredients.indexOf(ingredient)
+    console.log(activeFilters.ingredients[index]);
+    activeFilters.ingredients.splice(index,1);
+    console.log(activeFilters);
+  }else{
+
+    activeFilters.ingredients.push(ingredient);
+  }
 }
 
 function setFilterStrength(strength) {
@@ -407,14 +416,25 @@ function renderFiltered(filteredList) {
 }
 ///FILTERS END
 
-function createSpiritRadio(spirit) {
+function createRadio(spirit) {
   let radio = document.createElement("div");
   radio.classList.add("radio-option");
-  radio.innerHTML = `<input type="radio" name="spirit" id="${spirit}" value="${spirit}" onclick="setFilterSpirit('${spirit}');runFilters();">
-                     <label for="${spirit}">${spirit}</label>`;
+  radio.innerHTML = `<input type="radio" name="spirit" id="sprt-${spirit}" value="${spirit}" onclick="setFilterSpirit('${spirit}');runFilters();">
+                     <label for="sprt-${spirit}">${spirit}</label>`;
   spiritList.appendChild(radio);
   return radio;
 }
+
+function createCheckbox(ingredient) {
+  let list = document.getElementById("ingFilters");
+  let box = document.createElement("div");
+  box.classList.add("radio-option");
+  box.innerHTML = `<input type="checkbox" name="ingredient" id="ing-${ingredient}" value="${ingredient}" onclick="setFilterIngredients('${ingredient}');runFilters();">
+                     <label for="ing-${ingredient}">${ingredient}</label>`;
+  list.appendChild(box);
+  return box;
+}
+
 
 // INGREDIENT CHECKBOXES
 
