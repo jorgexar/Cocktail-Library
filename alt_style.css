@@ -27,6 +27,18 @@ body {
         "footer";
 }
 
+@media (min-width:800px) {
+    .layout {
+        display: grid;
+        grid-template-columns: minmax(200px, auto) 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas: "header header"
+            "aside main"
+            "footer footer";
+    }
+
+}
+
 /* SITE HEADER */
 .site-header {
     grid-area: header;
@@ -61,27 +73,32 @@ body {
     text-align: center;
     text-shadow: var(--main-shadow);
 }
+
 legend h2 {
     cursor: pointer;
     text-align: center;
     margin: 0 auto;
     position: relative;
 }
+
 legend h2::after {
-  
+
     content: " ▼";
     text-align: center;
     font-size: 1.8rem;
 }
+
 .filterList {
     height: 0;
     overflow: hidden;
     transition: all 0.5s ease-out;
 }
+
 .filterList.open {
     height: auto;
     overflow: visible;
 }
+
 /* SIDEBAR */
 .sidebar {
     grid-area: aside;
@@ -174,65 +191,20 @@ input:hover {
 
 /* CARDS */
 .cocktail-card {
-    /* background-color: var(--main-dark-blue); */
+    position: relative;
+    width: 320px;
+    border: 1px solid var(--main-border-color);
+    border-radius: 10px 20px;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between;  */
-    max-width: 300px;
-    background: linear-gradient(0deg, transparent 80%, rgba(106, 11, 143, 0.582));
-    border-radius: 5px;
-    border: 1px solid var(--main-border-color);
-    height: 400px;
-    padding: 1rem 2rem;
-    position: relative;
-
-}
-
-.description {
-    max-height: 100px;
-
+    transition: transform 0.3s ease-in-out;
 }
 
 .card-body {
-    padding: 1rem 2rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: scroll;
+    padding: 0.5rem;
 }
 
-.card-footer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: rgb(55, 8, 77);
-}
 
-.like-button {
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    /* position: absolute;
-    top: 0.1rem;
-    left: 0.1rem;
-     */
-}
-
-.like-button .like-icon {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border-radius: 1rem;
-    background-color: rgba(184, 175, 56, 0.582);
-    color: black;
-    font-weight: 600;
-}
-
-.like-icon.liked {
-    background-color: rgb(65, 1, 65);
-    color: white;
-}
 
 /* FOOTER */
 .site-footer {
@@ -240,17 +212,7 @@ input:hover {
     background-color: black;
 }
 
-@media (min-width:800px) {
-    .layout {
-        display: grid;
-        grid-template-columns: minmax(200px, auto) 1fr;
-        grid-template-rows: auto 1fr auto;
-        grid-template-areas: "header header"
-            "aside main"
-            "footer footer";
-    }
 
-}
 
 .strength-indicator {
     position: absolute;
