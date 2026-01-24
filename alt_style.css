@@ -198,19 +198,28 @@ input:hover {
     border-radius: 10px 20px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     transition: transform 0.3s ease-in-out;
 }
 
 .card-body {
     padding: 0.5rem;
 }
-
+.card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    border-top: 1px solid var(--main-border-color);
+   
+}
 
 
 /* FOOTER */
 .site-footer {
     grid-area: footer;
     background-color: black;
+    
 }
 
 
@@ -246,4 +255,23 @@ input:hover {
     padding: 2px;
 
    
+}
+.like-button{
+    background-color: #00000000;
+    border: none;
+    color: var(--main-border-color);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+    border-radius: 2rem;
+    opacity: 0.6;
+    
+}
+.like-button:hover {
+    color: rgb(0, 247, 255);
+    opacity: 1;
+}
+.like-button.liked {
+    color: rgb(8, 189, 53);
+    opacity: 1;
 }

@@ -307,6 +307,7 @@ for (let i = 0; i < cocktails.length; i++) {
   cocktails[i].liked = false;
 }
 
+
 let activeFilters = {
   spirit: null,
   ingredients: [],
@@ -320,14 +321,21 @@ for (let x = 0; x < MAX_ITEMS_PER_PAGE; x++) {
   createCocktailCard(cocktails[x]);
 }
 
-let uniqueSpirits = getUniqueValues(cocktails, "baseSpirit");
-let uniqueIngredients = getUniqueValues(cocktails, "ingredients");
-let strengthLevels = getUniqueValues(cocktails, "strength");
-let uniqueFlavors = getUniqueValues(cocktails, "flavorProfile");
-let uniqueTags = getUniqueValues(cocktails, "tags");
-uniqueIngredients = uniqueIngredients.filter(item => !uniqueSpirits.includes(item));
-const radioSpirits = uniqueSpirits.map(spirit => createRadio(spirit));
-const ingCheckboxes = uniqueIngredients.map(ing => createCheckbox(ing));
+const uniqueValues = {
+  spirits: getUniqueValues(cocktails, "baseSpirit"),
+  ingredients: getUniqueValues(cocktails, "ingredients"),
+  strengths: getUniqueValues(cocktails, "strength"),
+  flavors: getUniqueValues(cocktails, "flavorProfile"),
+  tags: getUniqueValues(cocktails, "tags")
+};
+
+const likedCocktails = [];
+
+
+
+
+const radioSpirits = uniqueValues.spirits.map(spirit => createRadio(spirit));
+const ingCheckboxes = uniqueValues.ingredients.map(ing => createCheckbox(ing));
 
 function getUniqueValues(cocktailList, attribute = null) {
   let unique = [];
@@ -458,11 +466,32 @@ function createCocktailCard(cocktail) {
                     <div class="strength-indicator ${cocktail.strength}">${cocktail.strength}</div>
 
                 <div class="card-footer">
-
+                    <button class="like-button" onclick="toggleLike(${cocktail.id}, this)">${cocktail.liked ? '❤️' : '🤍'}</button>
                 </div>
             </div>`;
   mainContent.innerHTML += newCard;
 };
 
+function toggleLike(cocktailId, btn) {
+  const cocktail = cocktails.find(c => c.id === cocktailId);
+  if (cocktail) {
+    cocktail.liked = !cocktail.liked;
+    btn.innerHTML = `${cocktail.liked ? '❤️' : '🤍'}`; 
+    if (cocktail.liked) {
+      likedCocktails.push(cocktail);
+      btn.classList.add("liked");
+    } else {
+      const index = likedCocktails.findIndex(c => c.id === cocktailId);
+      btn.classList.remove("liked");
+      if (index !== -1) {
+        likedCocktails.splice(index, 1);
+      }
+    }
+    console.log("Liked Cocktails:", likedCocktails);
+  } else {
+    console.error("Cocktail not found with ID:", cocktailId);
+  }   
+}
 
+// Initial Render
 
