@@ -315,6 +315,7 @@ let activeFilters = {
 };
 const mainContent = document.getElementById("main");
 const spiritList = document.getElementById("spiritsList");
+const ingList = document.getElementById("ingFilters");
 
 const MAX_ITEMS_PER_PAGE = cocktails.length;
 for (let x = 0; x < MAX_ITEMS_PER_PAGE; x++) {
@@ -335,7 +336,10 @@ const likedCocktails = [];
 
 
 const radioSpirits = uniqueValues.spirits.map(spirit => createRadio(spirit));
+populateList(spiritList, radioSpirits);
+
 const ingCheckboxes = uniqueValues.ingredients.map(ing => createCheckbox(ing));
+populateList(ingList,ingCheckboxes);
 
 function getUniqueValues(cocktailList, attribute = null) {
   let unique = [];
@@ -406,7 +410,8 @@ function showAll() {
   resetFilters();
   mainContent.innerHTML = "";
   for (let i = 0; i < cocktails.length; i++) {
-    createCocktailCard(cocktails[i]);
+    console.log(cocktails[i])
+    mainContent.appendChild(createCocktailCard(cocktails[i]));
   }
 }
 
@@ -419,57 +424,107 @@ function renderFiltered(filteredList) {
   for (let i = 0; i < filteredList.length; i++) {
     if (i > MAX_ITEMS_PER_PAGE) break;
     console.log(`:: ${filteredList[i].name} ::`);
-    createCocktailCard(filteredList[i]);
+    // createCocktailCard(filteredList[i]);
+    mainContent.appendChild(createCocktailCard(filteredList[i]));
   }
 }
 ///FILTERS END
 
 function createRadio(spirit) {
-  let radio = document.createElement("div");
-  radio.classList.add("radio-option");
-  radio.innerHTML = `<input type="radio" name="spirit" id="sprt-${spirit}" value="${spirit}" onclick="setFilterSpirit('${spirit}');runFilters();">
-                     <label for="sprt-${spirit}">${spirit}</label>`;
-  spiritList.appendChild(radio);
-  return radio;
+  let radioWrap = document.createElement("div");
+  radioWrap.classList.add("radio-option");
+  const radio = document.createElement("input");
+  radio.setAttribute('type','radio');
+  radio.setAttribute('name','spirit');
+  radio.setAttribute('id',`sprt-${spirit}`);
+  radio.setAttribute('value',`${spirit}`);
+
+  radio.addEventListener('click',()=>{
+    setFilterSpirit(spirit);
+    runFilters();
+  })
+
+
+  const label = document.createElement("label");
+  label.setAttribute("for",`sprt-${spirit}`);
+  label.textContent = `${spirit}`;
+  
+  radioWrap.appendChild(radio);
+  radioWrap.appendChild(label);
+  return radioWrap;
 }
 
 function createCheckbox(ingredient) {
-  let list = document.getElementById("ingFilters");
   let box = document.createElement("div");
   box.classList.add("radio-option");
-  box.innerHTML = `<input type="checkbox" name="ingredient" id="ing-${ingredient}" value="${ingredient}" onclick="setFilterIngredients('${ingredient}');runFilters();">
-                     <label for="ing-${ingredient}">${ingredient}</label>`;
-  list.appendChild(box);
+  const checkBox = document.createElement("input");
+  checkBox.setAttribute('type','checkbox');
+  checkBox.setAttribute('name','ingredient');
+  checkBox.setAttribute('id',`ing-${ingredient}`);
+  checkBox.setAttribute('value',`${ingredient}`);
+  checkBox.addEventListener('click',()=>{
+    setFilterIngredients(ingredient);
+    runFilters();
+  });
+  const label = document.createElement("label");
+  label.setAttribute("for",`ing-${ingredient}`);
+  label.textContent = ingredient;
+
+   
+  box.appendChild(checkBox);
+  box.appendChild(label);
   return box;
+}
+function populateList(list,arr){
+  for(let item of arr){
+    list.appendChild(item);
+  }
+  return list;
 }
 
 
-// INGREDIENT CHECKBOXES
-
-// INGREDIENT CHECKBOXES END
-
 
 function createCocktailCard(cocktail) {
-  let ings = "";
-  for (let ing of cocktail.ingredients) {
-    ings += `<li>${ing}</li>`;
-  }
-  let newCard = `<div class="cocktail-card">
-                <h3 class="cocktail-title">${cocktail.name}</h3>
-                <div class="card-body">
-                <span class="base-spirit">Base Spirit: ${cocktail.baseSpirit}</span>
-                
-                <p>
-                    <strong>Ingredients</strong> : ${cocktail.ingredients.join(",")}
-                </p>
-                </div>
-                    <div class="strength-indicator ${cocktail.strength}">${cocktail.strength}</div>
+  const cocktailCard = document.createElement("div");
+  cocktailCard.classList.add("cocktail-card");
 
-                <div class="card-footer">
-                    <button class="like-button" onclick="toggleLike(${cocktail.id}, this)">${cocktail.liked ? '❤️' : '🤍'}</button>
-                </div>
-            </div>`;
-  mainContent.innerHTML += newCard;
+  const title = document.createElement("h3");
+  title.classList.add("cocktail-title");
+  title.textContent = `${cocktail.name}`;
+
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+
+  const baseSpirit = document.createElement("p");
+  baseSpirit.classList.add("base-spirit");
+  baseSpirit.textContent = `Base Spirit: ${cocktail.baseSpirit}`;
+
+  const description = document.createElement("p");
+  description.textContent = `Ingredients : ${cocktail.ingredients.join(",")}`;
+
+  const strengthIndicator = document.createElement('div');
+  strengthIndicator.classList.add("strength-indicator");
+  strengthIndicator.classList.add(cocktail.strength);
+  strengthIndicator.textContent = cocktail.strength;
+
+  const cardFooter = document.createElement("div");
+  cardFooter.classList.add('card-footer');
+
+  const likeButton = document.createElement("button");
+  likeButton.classList.add("like-button");
+  likeButton.addEventListener("click",()=>{
+    toggleLike(cocktail.id, likeButton);
+  });
+  likeButton.textContent = `${cocktail.liked ? '❤️' : '🤍'}`;
+
+  cardFooter.appendChild(likeButton);
+  cardBody.appendChild(baseSpirit);
+  cardBody.appendChild(description);
+  cocktailCard.appendChild(title);
+  cocktailCard.appendChild(cardBody);
+  cocktailCard.appendChild(strengthIndicator);
+  cocktailCard.appendChild(cardFooter);
+  return cocktailCard;
 };
 
 function toggleLike(cocktailId, btn) {
@@ -494,4 +549,4 @@ function toggleLike(cocktailId, btn) {
 }
 
 // Initial Render
-
+showAll();
