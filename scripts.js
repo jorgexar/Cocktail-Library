@@ -523,7 +523,7 @@ function createCocktailCard(cocktail) {
   cocktailCard.appendChild(strengthIndicator);
   cocktailCard.appendChild(cardFooter);
 
-  cocktailCard.addEventListener("click",(e)=>{
+  cardBody.addEventListener("click",(e)=>{
     let message = `${cocktail.name} is a ${cocktail.baseSpirit} based cocktail and is served on a ${cocktail.glass} ${cocktail.glass.toLowerCase().includes("glass") ? "" : "glass"} garnished with ${cocktail.garnish}`;
     message += `\n`;
     message += "=====";

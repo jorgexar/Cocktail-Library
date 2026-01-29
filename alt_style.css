@@ -181,29 +181,36 @@ input:hover {
 .main-content {
     grid-area: main;
     background-color: rgb(4, 0, 43);
-    display: flex;
-    flex-grow: 1;
-    flex-shrink: 0;
-    flex-wrap: wrap;
+    padding: 1rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 350px);
+    grid-template-rows: repeat(4, 300px);
+    place-content: center;
     gap: 1rem;
-    align-content: flex-start;
-    padding: 3rem 1rem;
+    
 }
 
 /* CARDS */
 .cocktail-card {
     position: relative;
     width: 320px;
+    max-height: 320px;
+    padding: 0.4rem;
     border: 1px solid var(--main-border-color);
     border-radius: 10px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.3s ease-in-out;
+    
 }
 
 .card-body {
     padding: 0.5rem;
+}
+.card-body:hover{
+    cursor: pointer;
+    background-color: rgba(124, 32, 161, 0.11);
 }
 .card-footer {
     display: flex;
