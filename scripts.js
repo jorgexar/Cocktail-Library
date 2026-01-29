@@ -301,12 +301,13 @@ const cocktails = [
   }
 ];
 
+
 // Im too lazy to rewrite the properties.
 for (let i = 0; i < cocktails.length; i++) {
   cocktails[i].id = i;
   cocktails[i].liked = false;
 }
-
+let likedCocktails = [];
 
 let activeFilters = {
   spirit: null,
@@ -329,8 +330,6 @@ const uniqueValues = {
   flavors: getUniqueValues(cocktails, "flavorProfile"),
   tags: getUniqueValues(cocktails, "tags")
 };
-
-const likedCocktails = [];
 
 
 
@@ -410,7 +409,6 @@ function showAll() {
   resetFilters();
   mainContent.innerHTML = "";
   for (let i = 0; i < cocktails.length; i++) {
-    console.log(cocktails[i])
     mainContent.appendChild(createCocktailCard(cocktails[i]));
   }
 }
@@ -524,6 +522,17 @@ function createCocktailCard(cocktail) {
   cocktailCard.appendChild(cardBody);
   cocktailCard.appendChild(strengthIndicator);
   cocktailCard.appendChild(cardFooter);
+
+  cocktailCard.addEventListener("click",(e)=>{
+    let message = `${cocktail.name} is a ${cocktail.baseSpirit} based cocktail and is served on a ${cocktail.glass} ${cocktail.glass.toLowerCase().includes("glass") ? "" : "glass"} garnished with ${cocktail.garnish}`;
+    message += `\n`;
+    message += "=====";
+    message += `\n`;
+    message +=  `The mix of ${cocktail.ingredients.join(", ")} provides a  ${cocktail.flavorProfile.join(", ")} flavor profile`;
+    alert(message);
+    // THIS WILL BECOME A MODAL
+  })
+
   return cocktailCard;
 };
 
@@ -545,7 +554,8 @@ function toggleLike(cocktailId, btn) {
     console.log("Liked Cocktails:", likedCocktails);
   } else {
     console.error("Cocktail not found with ID:", cocktailId);
-  }   
+  }
+  localStorage.setItem("liked", JSON.stringify(likedCocktails));   
 }
 
 // Initial Render
